@@ -5,8 +5,7 @@ Created on Jun 25, 2017
 '''
 import unittest
 import logging
-from pprint import pprint
-from geodmaip import GeoDMAIP   
+from geodmaip import GeoDMAIP
 
 
 class Test(unittest.TestCase):
@@ -16,9 +15,9 @@ class Test(unittest.TestCase):
         uut = GeoDMAIP()
 
         data = uut._getRankings()
-        #Testing note: this values can change
-        self.assertAlmostEqual(data['Savannah']['rank']/10.0, 9.1, 1)
-        self.assertAlmostEqual(data[u'Milwaukee']['rank']/10.0, 3.5, 1)
+        # Testing note: this values can change
+        self.assertAlmostEqual(data['Savannah']['rank'] / 10.0, 9.1, 1)
+        self.assertAlmostEqual(data[u'Milwaukee']['rank'] / 10.0, 3.5, 1)
         self.assertTrue(data[u'New York']['rank'], 1)
 
     def test_00_Neilson(self):
@@ -38,10 +37,10 @@ class Test(unittest.TestCase):
     def test_01_LookupIP(self):
         GeoDMAIP.LOGLEVEL = logging.DEBUG
         uut = GeoDMAIP()
-        d = uut.iplookup ('108.209.28.133')
+        d = uut.iplookup('108.209.28.133')
 
         self.assertTrue('Raleigh' in d[u'dmainfo'][u'dma1'])
-        self.assertAlmostEqual(d[u'dmainfo'][u'metrics'][u'rank']/10.0, 2.4, 1)
+        self.assertAlmostEqual(d[u'dmainfo'][u'metrics'][u'rank'] / 10.0, 2.4, 1)
 
     def test_02_LookupDomains(self):
         GeoDMAIP.LOGLEVEL = logging.DEBUG
@@ -55,9 +54,9 @@ class Test(unittest.TestCase):
                    'ametsoc.com': 'Atlanta'}
         for domain in tocheck.keys():
             data = uut.domainlookup(domain)
-            self.assertNotEqual(data[u'dmainfo'],{}, 'neilson lookup for %s failed' % domain)
-            self.assertTrue(tocheck[domain] in data[u'dmainfo'][u'dma1'], 'expected %s, got %s' % (tocheck[domain], data['neilson']['dma1'],))
+            self.assertNotEqual(data[u'dmainfo'], {}, 'neilson lookup for %s failed' % domain)
+            self.assertTrue(tocheck[domain] in data[u'dmainfo'][u'dma1'], 'expected %s, got %s' % (tocheck[domain], data[u'dmainfo'][u'dma1'],))
+
 
 if __name__ == "__main__":
-    #import sys;sys.argv = ['', 'Test.testName']
     unittest.main()
